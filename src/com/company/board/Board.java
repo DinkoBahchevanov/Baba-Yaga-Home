@@ -1,5 +1,6 @@
 package com.company.board;
 
+import com.company.global_constants.Constants;
 import com.company.tiles.*;
 
 import javax.swing.*;
@@ -8,9 +9,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
+import static com.company.global_constants.Constants.*;
+
 public class Board extends JFrame implements MouseListener {
 
     private Tile[][] board;
+    private Tile selectedTile;
+    private Tile currentYellowTile;
 
     public Board() {
         this.setVisible(true);
@@ -69,7 +74,7 @@ public class Board extends JFrame implements MouseListener {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] == null) {
-                    board[i][j] = new UnexploredGpsTile(Color.PINK, j * 100, i * 100 + 30);
+                    board[i][j] = new UnexploredGpsTile(new Color(241, 186, 216), j * 100, i * 100 + 30);
                 }
             }
         }
@@ -87,7 +92,7 @@ public class Board extends JFrame implements MouseListener {
                 col = random.nextInt(8);
             }
 
-            board[row][col] = new GreenGpsTile(Color.green, col * 100, row + 30);
+            board[row][col] = new GreenGpsTile(new Color(151, 239, 151), col * 100, row + 30);
         }
     }
 
@@ -105,14 +110,27 @@ public class Board extends JFrame implements MouseListener {
 
         }
         board[row][col] = new YellowGpsTile(Color.YELLOW, col * 100, row * 100 + 30);
+        currentYellowTile = board[row][col];
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         int row = (e.getY() - 30) / 100;
         int col = e.getX() / 100;
-        System.out.println("Row: " + row);
-        System.out.println("Row: " + col);
+
+        if (selectedTile == null) {
+            if (board[row][col].getType().equals(YELLOW_GPS)) {
+                selectedTile = board[row][col];
+                return;
+            }
+        }
+
+        if (selectedTile != null) {
+            selectedTile.move(this.getGraphics(),board, row, col);
+            //board[row][col] = selectedTile;
+            visualizeInitialComponents(this.getGraphics());
+            selectedTile = null;
+        }
     }
 
     @Override
