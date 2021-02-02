@@ -19,10 +19,6 @@ public abstract class Tile {
         return color;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public void render(Graphics g, int x, int y) {
         g.setColor(getColor());
         g.drawRect(x, y, 100, 100);
@@ -45,38 +41,26 @@ public abstract class Tile {
         }
     }
 
-    protected boolean moveIsValid(Graphics g, Tile[][] board, int wantedRow, int wantedCol) {
+    /**
+     * Checking if move is valid.
+     * If board[wantedRow][wantedCol] are blue Pathless GPS tiles
+     * or Yellow GPS tiles, move is impossible.
+     * Movement is possible on left, right, up and down.
+     * @param g - graphics
+     * @param board - main board(matrix)
+     * @param wantedRow - clicked row for moving
+     * @param wantedCol - clicked col for moving
+     * @return
+     */
+    public boolean moveIsValid(Graphics g, Tile[][] board, int wantedRow, int wantedCol) {
         int currentRow = getRow();
         int currentCol = getCol();
-//        if (wantedRow == currentRow + 1 && wantedCol == currentCol) {
-//            return true;
-//        }
-//        if (wantedRow == currentRow - 1 && wantedCol == currentCol){
-//            return true;
-//        }
-//        if (wantedCol == currentCol + 1 && wantedRow == currentRow){
-//            return true;
-//        }
-//        if (wantedCol == currentCol - 1 && wantedRow == currentRow){
-//            return true;
-//        }
+
         if (((wantedRow == currentRow + 1 && wantedCol == currentCol) || (wantedRow == currentRow - 1 && wantedCol == currentCol)
                 || (wantedCol == currentCol + 1 && wantedRow == currentRow) || (wantedCol == currentCol - 1 && wantedRow == currentRow))
-                && !board[wantedRow][wantedCol].getType().equals(Constants.BLUE_GPS)) {
+                && (!board[wantedRow][wantedCol].getType().equals(Constants.BLUE_GPS)
+                && (!board[wantedRow][wantedCol].getType().equals(Constants.YELLOW_GPS)))) {
 
-            if (board[wantedRow][wantedCol].getType().equals(Constants.RED_GPS)) {
-
-                Tile questionTile = new QuestionTile(g, new Color(0, 0, 0), wantedRow, wantedCol);
-                ((QuestionTile) questionTile).render(g, wantedRow, wantedCol);
-
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                board[wantedRow][wantedCol] = questionTile;
-                return false;
-            }
             return true;
         }
         return false;
