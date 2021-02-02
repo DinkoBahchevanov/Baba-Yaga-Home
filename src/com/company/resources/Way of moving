@@ -1,0 +1,28 @@
+Moving is as follows:
+
+First click the Yellow GPS (starting point)
+
+Then click a tile on left/right/top/down, it depends on the position of
+the starting GPS. Movement is possible only in these four directions.
+
+Your aim is finding the house of Baba Qga which is on one of the Green Gps tiles.
+
+Everytime you move, you must click the last yellow tile(your last position)
+and then click a tile next to it in one of the four possible directions.
+
+You CANNOT pass through a Blue one.
+You CANNOT pass through yourself (Yellow one) or go backward through yourself.
+You CAN pass freely through a Green one.
+
+When you choose to move on a red one, it will visualize a question on that red tile.
+When you click second time on that Red tile(already with question on it),
+there is 20% chance of becoming a Blue one or 80% chance of
+becoming Yellow(it means you moved successfully and that's your new position).
+
+If there is no exit (you are *surrounded with blue ones* or *blue ones and yourself*
+or *nowhere to go on right/left/up/down and along with this surrounded with blue Tiles and/or yourself*)
+game will end automatically.
+
+There is Restart button if you win.
+
+Good luck!
