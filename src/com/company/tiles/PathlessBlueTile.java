@@ -12,6 +12,6 @@ public class PathlessBlueTile extends Tile {
 
     @Override
     public String getType() {
-        return Constants.BLUE_GPS;
+        return Constants.BLUE_GPS   ;
     }
 }

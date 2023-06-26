@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,10 @@ import java.util.Random;
 
 import static com.company.global_constants.Constants.*;
 
-public class Board extends JFrame implements MouseListener {
+public class Board extends JFrame implements MouseListener, MouseMotionListener {
+
+    private int lastHoveredRow = -1;
+    private int lastHoveredCol = -1;
 
     private Tile[][] board;
     private Tile selectedTile;
@@ -38,6 +42,7 @@ public class Board extends JFrame implements MouseListener {
         waitingForQuestion = false;
         setTiles();
         this.addMouseListener(this);
+        this.addMouseMotionListener(this);
     }
 
     @Override
@@ -100,12 +105,6 @@ public class Board extends JFrame implements MouseListener {
 
         babaRow = data.get(index).get(0);
         babaCol = data.get(index).get(1);
-
-        //For easier testing
-        System.out.println("For easier testing: ");
-        System.out.println("Baba Qga row: " + babaRow);
-        System.out.println("Baba Qga col: " + babaCol);
-        System.out.println();
     }
 
     /**
@@ -124,7 +123,8 @@ public class Board extends JFrame implements MouseListener {
                 row = random.nextInt(8);
                 col = random.nextInt(8);
             }
-            board[row][col] = new PathlessBlueTile(new Color(30, 47, 236), col * 100, row * 100 + 30);
+            board[row][col] = new PathlessBlueTile
+                    (new Color(30, 47, 236), col * 100, row * 100 + 30);
         }
     }
 
@@ -370,5 +370,48 @@ public class Board extends JFrame implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        int row = (e.getY() - 30) / 100;
+        int col = e.getX() / 100;
+
+//        if (lastHoveredRow != -1 && lastHoveredCol != -1) {
+//            if (!board[lastHoveredRow][lastHoveredCol].getType().equals(YELLOW_GPS) && !board[lastHoveredRow][lastHoveredCol].getType().equals(BLUE_GPS)) {
+//                paintCurrentHoveredTile(getGraphics(), row, col, new Color(93, 245, 180, 159));
+//            }
+//    }
+        if (lastHoveredRow != -1 && lastHoveredCol != -1) {
+        if (((row != lastHoveredRow && lastHoveredCol == col)
+                || (col != lastHoveredCol && lastHoveredRow == row)
+                ||(col != lastHoveredCol)) && board[row][col].getType().equals(RED_GPS) && !board[row][col].getType().equals(QUESTION) && selectedTile == null) {
+            if (!board[lastHoveredRow][lastHoveredCol].getType().equals(YELLOW_GPS)) {
+                paintCurrentHoveredTile(getGraphics(), row, col, new Color(93, 245, 180, 159));
+            }
+            if (lastHoveredRow != -1 && lastHoveredCol != -1 && (!board[lastHoveredRow][lastHoveredCol].getType().equals(BLUE_GPS) || !board[lastHoveredRow][lastHoveredCol].getType().equals(YELLOW_GPS))) {
+                paintCurrentHoveredTile(getGraphics(), lastHoveredRow, lastHoveredCol, new Color(243, 165, 207));
+            }
+            lastHoveredRow = row;
+            lastHoveredCol = col;
+        }
+        } else if (!board[row][col].getType().equals(RED_GPS)) {
+            paintCurrentHoveredTile(getGraphics(), lastHoveredRow, lastHoveredCol, new Color(243, 165, 207));
+        }
+    }
+    public void paintCurrentHoveredTile(Graphics g, int row, int col, Color color) {
+        g.setColor(color);
+        g.drawRect(col * 100 + 2, row * 100 + 32, 98, 98);
+        g.fillRect(col * 100 + 2, row * 100 + 32, 98, 98);
+
+       // board[i][j].render(g, j * 100, i * 100 + 30);
+//        g.setColor(getNormalColor());
+//        g.drawRect(x, y, 100, 100);
+//        g.fillRect(x + 2,y + 2,98,98);
     }
 }

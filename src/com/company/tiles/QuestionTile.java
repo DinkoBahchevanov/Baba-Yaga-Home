@@ -7,6 +7,7 @@ import java.awt.*;
 public class QuestionTile extends Tile {
 
     private Graphics g;
+
     public QuestionTile(Graphics g, Color color, int x, int y) {
         super(color, x, y);
         this.g = g;

@@ -5,22 +5,27 @@ import com.company.global_constants.Constants;
 import java.awt.*;
 
 public abstract class Tile {
-    private Color color;
+    private Color normalColor;
+    private Color hoveredColour;
     private int x;
     private int y;
 
-    public Tile(Color color, int x, int y) {
-        this.color = color;
+    public Tile(Color normalColor, int x, int y) {
+        this.normalColor = normalColor;
         this.x = x;
         this.y = y;
     }
 
-    public Color getColor() {
-        return color;
+    public Color getNormalColor() {
+        return normalColor;
+    }
+
+    public void setNormalColor(Color normalColor) {
+        this.normalColor = normalColor;
     }
 
     public void render(Graphics g, int x, int y) {
-        g.setColor(getColor());
+        g.setColor(getNormalColor());
         g.drawRect(x, y, 100, 100);
         g.fillRect(x + 2,y + 2,98,98);
     }

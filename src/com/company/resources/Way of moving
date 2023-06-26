@@ -14,9 +14,7 @@ You CANNOT pass through a Blue one.
 You CANNOT pass through yourself (Yellow one) or go backward through yourself.
 You CAN pass freely through a Green one.
 
-When you choose to move on a red one, it will visualize a question on that red tile.
-When you click second time on that Red tile(already with question on it),
-there is 20% chance of becoming a Blue one or 80% chance of
+-ne or 80% chance of
 becoming Yellow(it means you moved successfully and that's your new position).
 
 If there is no exit (you are *surrounded with blue ones* or *blue ones and yourself*

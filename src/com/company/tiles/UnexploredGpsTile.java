@@ -3,7 +3,6 @@ package com.company.tiles;
 import com.company.global_constants.Constants;
 
 import java.awt.*;
-import java.lang.constant.Constable;
 
 public class UnexploredGpsTile extends Tile {
 

@@ -1,14 +1,11 @@
 package com.company.win_lose_frame;
 
 import com.company.board.Board;
-import com.company.global_constants.Constants;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +37,7 @@ public class MyFrame extends JFrame {
             this.add(panel3);
             return;
         }
+
         this.setSize(new Dimension(615, 404));
         BufferedImage bf = null;
         try {
